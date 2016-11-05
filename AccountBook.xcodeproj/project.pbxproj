@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		DEAD50EA1DCCC420009DEB1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD50E91DCCC420009DEB1D /* main.m */; };
 		DEAD50ED1DCCC421009DEB1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD50EC1DCCC421009DEB1D /* AppDelegate.m */; };
-		DEAD50F01DCCC421009DEB1D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD50EF1DCCC421009DEB1D /* ViewController.m */; };
-		DEAD50F31DCCC421009DEB1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEAD50F11DCCC421009DEB1D /* Main.storyboard */; };
 		DEAD50F51DCCC421009DEB1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEAD50F41DCCC421009DEB1D /* Assets.xcassets */; };
-		DEAD50F81DCCC421009DEB1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEAD50F61DCCC421009DEB1D /* LaunchScreen.storyboard */; };
+		DEAD51021DCCC49A009DEB1D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEAD51011DCCC49A009DEB1D /* Launch Screen.storyboard */; };
+		DEAD51051DCCC7F4009DEB1D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD51041DCCC7F4009DEB1D /* MainViewController.m */; };
+		DEAD51081DCCD377009DEB1D /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD51071DCCD377009DEB1D /* AddViewController.m */; };
+		DEAD510B1DCD757D009DEB1D /* Value.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD510A1DCD757D009DEB1D /* Value.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +21,16 @@
 		DEAD50E91DCCC420009DEB1D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEAD50EB1DCCC420009DEB1D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DEAD50EC1DCCC421009DEB1D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DEAD50EE1DCCC421009DEB1D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DEAD50EF1DCCC421009DEB1D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		DEAD50F21DCCC421009DEB1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DEAD50F41DCCC421009DEB1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DEAD50F71DCCC421009DEB1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEAD50F91DCCC421009DEB1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEAD51011DCCC49A009DEB1D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		DEAD51031DCCC7F4009DEB1D /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		DEAD51041DCCC7F4009DEB1D /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		DEAD51061DCCD377009DEB1D /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
+		DEAD51071DCCD377009DEB1D /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		DEAD51091DCD74C7009DEB1D /* PassValueDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassValueDelegate.h; sourceTree = "<group>"; };
+		DEAD510A1DCD757D009DEB1D /* Value.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Value.m; sourceTree = "<group>"; };
+		DEAD510C1DCD758B009DEB1D /* Value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +65,17 @@
 			children = (
 				DEAD50EB1DCCC420009DEB1D /* AppDelegate.h */,
 				DEAD50EC1DCCC421009DEB1D /* AppDelegate.m */,
-				DEAD50EE1DCCC421009DEB1D /* ViewController.h */,
-				DEAD50EF1DCCC421009DEB1D /* ViewController.m */,
-				DEAD50F11DCCC421009DEB1D /* Main.storyboard */,
 				DEAD50F41DCCC421009DEB1D /* Assets.xcassets */,
-				DEAD50F61DCCC421009DEB1D /* LaunchScreen.storyboard */,
 				DEAD50F91DCCC421009DEB1D /* Info.plist */,
 				DEAD50E81DCCC420009DEB1D /* Supporting Files */,
+				DEAD51011DCCC49A009DEB1D /* Launch Screen.storyboard */,
+				DEAD51031DCCC7F4009DEB1D /* MainViewController.h */,
+				DEAD51041DCCC7F4009DEB1D /* MainViewController.m */,
+				DEAD51061DCCD377009DEB1D /* AddViewController.h */,
+				DEAD51071DCCD377009DEB1D /* AddViewController.m */,
+				DEAD51091DCD74C7009DEB1D /* PassValueDelegate.h */,
+				DEAD510C1DCD758B009DEB1D /* Value.h */,
+				DEAD510A1DCD757D009DEB1D /* Value.m */,
 			);
 			path = AccountBook;
 			sourceTree = "<group>";
@@ -138,9 +147,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEAD50F81DCCC421009DEB1D /* LaunchScreen.storyboard in Resources */,
+				DEAD51021DCCC49A009DEB1D /* Launch Screen.storyboard in Resources */,
 				DEAD50F51DCCC421009DEB1D /* Assets.xcassets in Resources */,
-				DEAD50F31DCCC421009DEB1D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,32 +159,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEAD50F01DCCC421009DEB1D /* ViewController.m in Sources */,
 				DEAD50ED1DCCC421009DEB1D /* AppDelegate.m in Sources */,
+				DEAD51051DCCC7F4009DEB1D /* MainViewController.m in Sources */,
+				DEAD51081DCCD377009DEB1D /* AddViewController.m in Sources */,
+				DEAD510B1DCD757D009DEB1D /* Value.m in Sources */,
 				DEAD50EA1DCCC420009DEB1D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DEAD50F11DCCC421009DEB1D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DEAD50F21DCCC421009DEB1D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		DEAD50F61DCCC421009DEB1D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DEAD50F71DCCC421009DEB1D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DEAD50FA1DCCC421009DEB1D /* Debug */ = {
@@ -310,6 +301,7 @@
 				DEAD50FE1DCCC421009DEB1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
