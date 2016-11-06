@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE95B7471DCE024000E2739E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE95B7461DCE024000E2739E /* DetailViewController.m */; };
 		DEAD50EA1DCCC420009DEB1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD50E91DCCC420009DEB1D /* main.m */; };
 		DEAD50ED1DCCC421009DEB1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAD50EC1DCCC421009DEB1D /* AppDelegate.m */; };
 		DEAD50F51DCCC421009DEB1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEAD50F41DCCC421009DEB1D /* Assets.xcassets */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE95B7451DCE024000E2739E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		DE95B7461DCE024000E2739E /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		DEAD50E51DCCC420009DEB1D /* AccountBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccountBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEAD50E91DCCC420009DEB1D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEAD50EB1DCCC420009DEB1D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -76,6 +79,8 @@
 				DEAD51091DCD74C7009DEB1D /* PassValueDelegate.h */,
 				DEAD510C1DCD758B009DEB1D /* Value.h */,
 				DEAD510A1DCD757D009DEB1D /* Value.m */,
+				DE95B7451DCE024000E2739E /* DetailViewController.h */,
+				DE95B7461DCE024000E2739E /* DetailViewController.m */,
 			);
 			path = AccountBook;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 				DEAD51081DCCD377009DEB1D /* AddViewController.m in Sources */,
 				DEAD510B1DCD757D009DEB1D /* Value.m in Sources */,
 				DEAD50EA1DCCC420009DEB1D /* main.m in Sources */,
+				DE95B7471DCE024000E2739E /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

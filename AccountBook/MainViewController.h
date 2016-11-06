@@ -17,5 +17,10 @@
 @property (nonatomic, strong) NSMutableArray *chooseArray;
 @property (nonatomic, strong) NSMutableArray *cashArray;
 @property (nonatomic, strong) NSMutableArray *remarkArray;
+@property (nonatomic) CGFloat Sum;
+@property (nonatomic) CGFloat paySum;
+@property (nonatomic) CGFloat getSum;
+
+@property(nonatomic,assign) NSObject<PassValueDelegate> *delegate;
 
 @end

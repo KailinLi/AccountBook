@@ -7,11 +7,10 @@
 //
 
 #import "AddViewController.h"
-#import "MainViewController.h"
 #import "Value.h"
-#import "AppDelegate.h"
+#import "MainViewController.h"
 
-@interface AddViewController ()
+@interface AddViewController ()<UITextFieldDelegate, UITextViewDelegate>
 
 @end
 
@@ -32,10 +31,6 @@
     NSString *tmpCash;
     NSString *tmpRemark;
     
-    NSUserDefaults *defaults;
-    
-    AppDelegate *appdelegate;
-    
 }
 
 @synthesize titleArray, dateArray, chooseArray, cashArray, remarkArray;
@@ -44,34 +39,41 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor whiteColor];
     CGSize size = self.view.bounds.size;
     noticeTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, size.width, 30)];
     [self.view addSubview:noticeTitle];
+    inputTitle.textAlignment = NSTextAlignmentCenter;
     noticeTitle.text = @"input the title";
     
-    noticeDate = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, size.width, 30)];
-    [self.view addSubview:noticeDate];
-    noticeDate.text = @"input the Date";
+//    noticeDate = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, size.width, 30)];
+//    [self.view addSubview:noticeDate];
+//    noticeDate.text = @"input the Date";
+//    
+//    noticeCash = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, size.width, 30)];
+//    [self.view addSubview:noticeCash];
+//    noticeCash.text = @"input the Cash";
+//    
+//    noticeRemark = [[UILabel alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 + size.width * 0.28, size.width, 30)];
+//    [self.view addSubview:noticeRemark];
+//    noticeRemark.text = @"Remark";
     
-    noticeCash = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, size.width, 30)];
-    [self.view addSubview:noticeCash];
-    noticeCash.text = @"input the Cash";
-    
-    noticeRemark = [[UILabel alloc] initWithFrame:CGRectMake(0, 450, size.width, 30)];
-    [self.view addSubview:noticeRemark];
-    noticeRemark.text = @"input the remark";
-    
-    inputTitle = [[UITextView alloc]initWithFrame:CGRectMake(0, 130, size.width, 30)];
+    inputTitle = [[UITextView alloc]initWithFrame:CGRectMake(0, 100, size.width, 50)];
+    inputTitle.text = @"请输入事件";
+    inputTitle.font = [UIFont fontWithName:@"Arial" size:30];
+    inputTitle.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputTitle];
     
-    datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 180, size.width, size.width * 0.67)];
+    datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 - 100, size.width, size.width * 0.28)];
     [self.view addSubview:datePicker];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     datePicker.maximumDate = [NSDate dateWithTimeIntervalSinceNow:365 * 24 * 3600];
     datePicker.minimumDate = [NSDate dateWithTimeIntervalSinceNow:-356 * 24 * 3600];
     
-    segments = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 330, 50, 30)];
+    tmpChoose = @"收入";
+    
+    segments = [[UISegmentedControl alloc] initWithFrame:CGRectMake(50, 330, 100, 30)];
     [self.view addSubview:segments];
     NSArray *titles = @[@"收入", @"支出"];
     for (int i = 0 ; i < titles.count; i++) {
@@ -79,15 +81,27 @@
     }
     [segments addTarget:self action:@selector(change:) forControlEvents:UIControlEventValueChanged];
     
-    inputCash = [[UITextView alloc] initWithFrame:CGRectMake(50, 330, size.width - 50, 30)];
+    inputCash = [[UITextView alloc] initWithFrame:CGRectMake(150, 328, size.width - 150, 50)];
+    inputCash.text = @"请输入金额";
+    inputCash.font = [UIFont fontWithName:@"Arial" size:20];
+    inputCash.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputCash];
     
-    inputRemark = [[UITextField alloc] initWithFrame:CGRectMake(0, 480, size.width, 30)];
+    inputRemark = [[UITextField alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 + size.width * 0.28 + 30, size.width, 30)];
+    inputRemark.text = @"请输入备注";
+    inputRemark.font = [UIFont fontWithName:@"Arial" size:20];
+    inputRemark.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputRemark];
     
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    inputTitle.delegate = self;
+    inputCash.delegate = self;
+    inputRemark.delegate = self;
+    
+    
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     self.navigationItem.rightBarButtonItem = saveButton;
+    self.navigationItem.title = @"添加";
     
 }
 
@@ -101,6 +115,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    
+    textView.text = @"";
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSTimeInterval animationDuration=0.30f;
+    inputRemark.text = @"备注：";
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    CGRect rect=CGRectMake(0.0f,-30,width,height);
+    self.view.frame=rect;
+    [UIView commitAnimations];
+    return YES;
+}
+
+
 - (void) change:(UISegmentedControl*) sender {
     switch (sender.selectedSegmentIndex) {
         case 0:
@@ -111,6 +147,14 @@
             break;
         default:
             break;
+    }
+}
+
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (![self.view isExclusiveTouch]) {
+        [inputTitle resignFirstResponder];
+        [inputCash resignFirstResponder];
+        [inputRemark resignFirstResponder];
     }
 }
 
@@ -135,67 +179,18 @@
     
     
     
-    //通过委托协议传值
     [self.delegate passValue:tmpValue];
 
-    
-    
-//    titleArray = [defaults objectForKey:@"title"];
-//    dateArray = [defaults objectForKey:@"date"];
-//    chooseArray = [defaults objectForKey:@"choose"];
-//    cashArray = [defaults objectForKey:@"cash"];
-//    remarkArray = [defaults objectForKey:@"remark"];
-//    
-//    [titleArray addObject:tmpTitle];
-//    [dateArray addObject:tmpDate];
-//    [chooseArray addObject:tmpChoose];
-//    [cashArray addObject:tmpCash];
-//    [remarkArray addObject:tmpRemark];
-    
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"title"]==nil) {
-//        NSMutableArray *initTitleArray = [[NSMutableArray alloc]init];
-//        [[NSUserDefaults standardUserDefaults] setObject:initTitleArray forKey:@"title"];
-//    }
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"date"]==nil) {
-//        NSMutableArray *initDateArray = [[NSMutableArray alloc]init];
-//        [[NSUserDefaults standardUserDefaults] setObject:initDateArray forKey:@"date"];
-//    }
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"choose"]==nil) {
-//        NSMutableArray *initChooseArray = [[NSMutableArray alloc]init];
-//        [[NSUserDefaults standardUserDefaults] setObject:initChooseArray forKey:@"choose"];
-//    }
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"cash"]==nil) {
-//        NSMutableArray *initCashArray = [[NSMutableArray alloc]init];
-//        [[NSUserDefaults standardUserDefaults] setObject:initCashArray forKey:@"cash"];
-//    }
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"remark"]==nil) {
-//        NSMutableArray *initRemarkArray = [[NSMutableArray alloc]init];
-//        [[NSUserDefaults standardUserDefaults] setObject:initRemarkArray forKey:@"remark"];
-//    }
-    
-//    MainViewController *sendValue = [[MainViewController alloc] init];
-//    sendValue.titleArray = titleArray;
-//    sendValue.dateArray = dateArray;
-//    sendValue.chooseArray = chooseArray;
-//    sendValue.cashArray = cashArray;
-//    sendValue.remarkArray = remarkArray;
-    
-//    [defaults setObject:titleArray forKey:@"title"];
-//    [defaults setObject:dateArray forKey:@"date"];
-//    [defaults setObject:chooseArray forKey:@"choose"];
-//    [defaults setObject:cashArray forKey:@"cash"];
-//    [defaults setObject:remarkArray forKey:@"remark"];
+
     
     [inputTitle resignFirstResponder];
     [inputCash resignFirstResponder];
     [inputRemark resignFirstResponder];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Notice" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction: [UIAlertAction actionWithTitle:@"sure" style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存成功" message:@"\n学会理财，适度消费哦^o^" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction: [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:true completion:nil];
-    
-    //退回到第一个窗口
-    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 
