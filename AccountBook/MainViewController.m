@@ -11,7 +11,7 @@
 #import "DetailViewController.h"
 #import "Value.h"
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PassValueDelegate>
 
 @end
 
@@ -31,7 +31,6 @@
     BOOL isSearch;
 }
 
-@synthesize titleArray, dateArray, chooseArray, cashArray, remarkArray, Sum, paySum, getSum;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -59,45 +58,45 @@
     }
     
     
-    if (titleArray == nil) {
-        titleArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"title"]];
-        dateArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"date"]];
-        chooseArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"choose"]];
-        cashArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"cash"]];
-        remarkArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"remark"]];
+    if (self.titleArray == nil) {
+        self.titleArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"title"]];
+        self.dateArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"date"]];
+        self.chooseArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"choose"]];
+        self.cashArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"cash"]];
+        self.remarkArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"remark"]];
         
     }
     
-    Sum = 0;
-    paySum = 0;
-    getSum = 0;
+    self.Sum = 0;
+    self.paySum = 0;
+    self.getSum = 0;
     
     
-    for (int i = 0; i < chooseArray.count; i ++) {
-        if ([chooseArray[i]  isEqual: @"支出"]) {
-            Sum -= [cashArray[i] floatValue];
+    for (int i = 0; i < self.chooseArray.count; i ++) {
+        if ([self.chooseArray[i]  isEqual: @"支出"]) {
+            self.Sum -= [self.cashArray[i] floatValue];
         }
         else
-            Sum += [cashArray[i] floatValue];
+            self.Sum += [self.cashArray[i] floatValue];
     }
     
-    for (int i = 0; i < chooseArray.count; i ++) {
-        if ([chooseArray[i]  isEqual: @"支出"]) {
-            paySum += [cashArray[i] floatValue];
+    for (int i = 0; i < self.chooseArray.count; i ++) {
+        if ([self.chooseArray[i]  isEqual: @"支出"]) {
+            self.paySum += [self.cashArray[i] floatValue];
         }
         else
-            getSum += [cashArray[i] floatValue];
+            self.getSum += [self.cashArray[i] floatValue];
     }
     
-    sumLable.text = [[NSString stringWithFormat:@"%f", Sum] substringToIndex:5];
-    payLable.text = [[NSString stringWithFormat:@"%f", paySum] substringToIndex:5];
-    getLable.text = [[NSString stringWithFormat:@"%f", getSum] substringToIndex:5];
+    sumLable.text = [[NSString stringWithFormat:@"%f", self.Sum] substringToIndex:5];
+    payLable.text = [[NSString stringWithFormat:@"%f", self.paySum] substringToIndex:5];
+    getLable.text = [[NSString stringWithFormat:@"%f", self.getSum] substringToIndex:5];
     
-    [defaults setObject:titleArray forKey:@"title"];
-    [defaults setObject:dateArray forKey:@"date"];
-    [defaults setObject:chooseArray forKey:@"choose"];
-    [defaults setObject:cashArray forKey:@"cash"];
-    [defaults setObject:remarkArray forKey:@"remark"];
+    [defaults setObject:self.titleArray forKey:@"title"];
+    [defaults setObject:self.dateArray forKey:@"date"];
+    [defaults setObject:self.chooseArray forKey:@"choose"];
+    [defaults setObject:self.cashArray forKey:@"cash"];
+    [defaults setObject:self.remarkArray forKey:@"remark"];
     
     [self.table reloadData];
     
@@ -106,11 +105,11 @@
 
 -(void)passValue:(Value *)value
 {
-    [titleArray addObject:value.tmpTitle];
-    [dateArray addObject:value.tmpDate];
-    [chooseArray addObject:value.tmpChoose];
-    [cashArray addObject:value.tmpCash];
-    [remarkArray addObject:value.tmpRemark];
+    [self.titleArray addObject:value.tmpTitle];
+    [self.dateArray addObject:value.tmpDate];
+    [self.chooseArray addObject:value.tmpChoose];
+    [self.cashArray addObject:value.tmpCash];
+    [self.remarkArray addObject:value.tmpRemark];
 }
 
 - (void)viewDidLoad {
@@ -119,34 +118,40 @@
     
     CGSize size = [self.view bounds].size;
     
-    sumLable = [[UILabel alloc] initWithFrame:CGRectMake(size.width * 0.5 - size.width * 0.31, 44 + 20 + 10, size.width * 0.62, size.width * 0.62 * 0.31)];
+    sumLable = [[UILabel alloc] initWithFrame:
+                CGRectMake(size.width * 0.5 - size.width * 0.31, 44 + 20 + 10, size.width * 0.62, size.width * 0.62 * 0.31)];
     [self.view addSubview:sumLable];
     sumLable.font = [UIFont fontWithName:@"Arial" size:60];
     sumLable.textAlignment = NSTextAlignmentCenter;
     
-    payLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 44 + 20 + 100, size.width* 0.5, size.width * 0.62 * 0.62 * 0.5)];
+    payLable = [[UILabel alloc] initWithFrame:
+                CGRectMake(0, 44 + 20 + 100, size.width* 0.5, size.width * 0.62 * 0.62 * 0.5)];
     [self.view addSubview:payLable];
     payLable.font = [UIFont fontWithName:@"Arial" size:25];
     payLable.textAlignment = NSTextAlignmentCenter;
     
-    getLable = [[UILabel alloc] initWithFrame:CGRectMake(size.width * 0.5, 44 + 20 + 100, size.width* 0.5, size.width * 0.62 * 0.62 * 0.5)];
+    getLable = [[UILabel alloc] initWithFrame:
+                CGRectMake(size.width * 0.5, 44 + 20 + 100, size.width* 0.5, size.width * 0.62 * 0.62 * 0.5)];
     [self.view addSubview:getLable];
     getLable.font = [UIFont fontWithName:@"Arial" size:25];
     getLable.textAlignment = NSTextAlignmentCenter;
     
-    noticePay = [[UILabel alloc] initWithFrame:CGRectMake(0, 44 + 20 + size.width * 0.62 * 0.31 - 10, size.width * 0.5, size.width * 0.62 * 0.62 * 0.5)];
+    noticePay = [[UILabel alloc] initWithFrame:
+                 CGRectMake(0, 44 + 20 + size.width * 0.62 * 0.31 - 10, size.width * 0.5, size.width * 0.62 * 0.62 * 0.5)];
     [self.view addSubview:noticePay];
     noticePay.font = [UIFont fontWithName:@"Arial" size:15];
     noticePay.textAlignment = NSTextAlignmentCenter;
     noticePay.text = @"支出";
     
-    noticeGet = [[UILabel alloc] initWithFrame:CGRectMake(size.width * 0.5, 44 + 20 + size.width * 0.31 * 0.62 - 10, size.width * 0.5, size.width * 0.62 * 0.62 * 0.5)];
+    noticeGet = [[UILabel alloc] initWithFrame:
+                 CGRectMake(size.width * 0.5, 44 + 20 + size.width * 0.31 * 0.62 - 10, size.width * 0.5, size.width * 0.62 * 0.62 * 0.5)];
     [self.view addSubview:noticeGet];
     noticeGet.font = [UIFont fontWithName:@"Arial" size:15];
     noticeGet.textAlignment = NSTextAlignmentCenter;
     noticeGet.text = @"收入";
     
-    segments = [[UISegmentedControl alloc] initWithFrame:CGRectMake(size.width * 0.5 - 75, 240, 150, 30)];
+    segments = [[UISegmentedControl alloc] initWithFrame:
+                CGRectMake(size.width * 0.5 - 75, 240, 150, 30)];
     [self.view addSubview:segments];
     NSArray *titles = @[@"金额升序", @"金额降序"];
     for (int i = 0 ; i < titles.count; i++) {
@@ -154,13 +159,15 @@
     }
     [segments addTarget:self action:@selector(change:) forControlEvents:UIControlEventValueChanged];
     
-    self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62, size.width, (size.height - 44) * 0.62 - 10)];
+    self.table = [[UITableView alloc] initWithFrame:
+                  CGRectMake(0, size.height - (size.height - 44) * 0.62, size.width, (size.height - 44) * 0.62 - 10)];
     [self.view addSubview:self.table];
     self.table.delegate = self;
     self.table.dataSource = self;
     
     isSearch = NO;
-    search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, size.width, 40)];
+    search = [[UISearchBar alloc] initWithFrame:
+              CGRectMake(0, 0, size.width, 40)];
     search.placeholder = @"输入关键字";
     search.showsCancelButton = YES;
     self.table.tableHeaderView = search;
@@ -192,7 +199,7 @@
         return searchData.count;
     }
     else {
-        return titleArray.count;
+        return self.titleArray.count;
     }
 }
 
@@ -207,8 +214,8 @@
         cell.textLabel.text = searchData[rowNo];
     }
     else {
-        cell.detailTextLabel.text = [chooseArray[rowNo] stringByAppendingString:cashArray[rowNo]];
-        cell.textLabel.text = titleArray[rowNo];
+        cell.detailTextLabel.text = [self.chooseArray[rowNo] stringByAppendingString:self.cashArray[rowNo]];
+        cell.textLabel.text = self.titleArray[rowNo];
     }
     return cell;
 }
@@ -231,7 +238,7 @@
 - (void) filterBySubstring: (NSString*) subStr {
     isSearch = YES;
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", subStr];
-    searchData = [titleArray filteredArrayUsingPredicate:pred];
+    searchData = [self.titleArray filteredArrayUsingPredicate:pred];
     [self.table reloadData];
 }
 
@@ -244,24 +251,24 @@
     
     NSInteger row = [indexPath row];
     Value *tmpValue = [[Value alloc] init];
-    tmpValue.tmpTitle = [titleArray objectAtIndex:row];
-    tmpValue.tmpDate = [dateArray objectAtIndex:row];
-    tmpValue.tmpChoose = [chooseArray objectAtIndex:row];
-    tmpValue.tmpCash = [cashArray objectAtIndex:row];
-    tmpValue.tmpRemark = [remarkArray objectAtIndex:row];
+    tmpValue.tmpTitle = [self.titleArray objectAtIndex:row];
+    tmpValue.tmpDate = [self.dateArray objectAtIndex:row];
+    tmpValue.tmpChoose = [self.chooseArray objectAtIndex:row];
+    tmpValue.tmpCash = [self.cashArray objectAtIndex:row];
+    tmpValue.tmpRemark = [self.remarkArray objectAtIndex:row];
     
-    [titleArray removeObjectAtIndex:row];
-    [dateArray removeObjectAtIndex:row];
-    [chooseArray removeObjectAtIndex:row];
-    [cashArray removeObjectAtIndex:row];
-    [remarkArray removeObjectAtIndex:row];
+    [self.titleArray removeObjectAtIndex:row];
+    [self.dateArray removeObjectAtIndex:row];
+    [self.chooseArray removeObjectAtIndex:row];
+    [self.cashArray removeObjectAtIndex:row];
+    [self.remarkArray removeObjectAtIndex:row];
     
 
     
     
     [self.delegate passValue:tmpValue];
     
-    [self.navigationController pushViewController:detailView animated:kCATransitionFromBottom];
+    [self.navigationController pushViewController:detailView animated:YES];
     
 }
 
@@ -274,44 +281,44 @@
     
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [titleArray removeObjectAtIndex:indexPath.row];
-        [dateArray removeObjectAtIndex:indexPath.row];
-        [chooseArray removeObjectAtIndex:indexPath.row];
-        [cashArray removeObjectAtIndex:indexPath.row];
-        [remarkArray removeObjectAtIndex:indexPath.row];
+        [self.titleArray removeObjectAtIndex:indexPath.row];
+        [self.dateArray removeObjectAtIndex:indexPath.row];
+        [self.chooseArray removeObjectAtIndex:indexPath.row];
+        [self.cashArray removeObjectAtIndex:indexPath.row];
+        [self.remarkArray removeObjectAtIndex:indexPath.row];
         [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:titleArray forKey:@"title"];
-        [defaults setObject:dateArray forKey:@"date"];
-        [defaults setObject:chooseArray forKey:@"choose"];
-        [defaults setObject:cashArray forKey:@"cash"];
-        [defaults setObject:remarkArray forKey:@"remark"];
+        [defaults setObject:self.titleArray forKey:@"title"];
+        [defaults setObject:self.dateArray forKey:@"date"];
+        [defaults setObject:self.chooseArray forKey:@"choose"];
+        [defaults setObject:self.cashArray forKey:@"cash"];
+        [defaults setObject:self.remarkArray forKey:@"remark"];
         
-        Sum = 0;
-        paySum = 0;
-        getSum = 0;
+        self.Sum = 0;
+        self.paySum = 0;
+        self.getSum = 0;
         
         
-        for (int i = 0; i < chooseArray.count; i ++) {
-            if ([chooseArray[i]  isEqual: @"支出"]) {
-                Sum -= [cashArray[i] floatValue];
+        for (int i = 0; i < self.chooseArray.count; i ++) {
+            if ([self.chooseArray[i]  isEqual: @"支出"]) {
+                self.Sum -= [self.cashArray[i] floatValue];
             }
             else
-                Sum += [cashArray[i] floatValue];
+                self.Sum += [self.cashArray[i] floatValue];
         }
         
-        for (int i = 0; i < chooseArray.count; i ++) {
-            if ([chooseArray[i]  isEqual: @"支出"]) {
-                paySum += [cashArray[i] floatValue];
+        for (int i = 0; i < self.chooseArray.count; i ++) {
+            if ([self.chooseArray[i]  isEqual: @"支出"]) {
+                self.paySum += [self.cashArray[i] floatValue];
             }
             else
-                getSum += [cashArray[i] floatValue];
+                self.getSum += [self.cashArray[i] floatValue];
         }
         
-        sumLable.text = [[NSString stringWithFormat:@"%f", Sum] substringToIndex:5];
-        payLable.text = [[NSString stringWithFormat:@"%f", paySum] substringToIndex:5];
-        getLable.text = [[NSString stringWithFormat:@"%f", getSum] substringToIndex:5];
+        sumLable.text = [[NSString stringWithFormat:@"%f", self.Sum] substringToIndex:5];
+        payLable.text = [[NSString stringWithFormat:@"%f", self.paySum] substringToIndex:5];
+        getLable.text = [[NSString stringWithFormat:@"%f", self.getSum] substringToIndex:5];
         
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -321,16 +328,16 @@
 
 - (void) change:(UISegmentedControl*) sender {
     
-    if (cashArray.count != 1 && cashArray.count != 0) {
+    if (self.cashArray.count != 1 && self.cashArray.count != 0) {
         CGFloat x, y;
         int payCount = 0;
-        for (int i = 0; i < chooseArray.count; i ++) {
-            if ([chooseArray[i]  isEqual: @"支出"]) {
-                [titleArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
-                [dateArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
-                [chooseArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
-                [cashArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
-                [remarkArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
+        for (int i = 0; i < self.chooseArray.count; i ++) {
+            if ([self.chooseArray[i]  isEqual: @"支出"]) {
+                [self.titleArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
+                [self.dateArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
+                [self.chooseArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
+                [self.cashArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
+                [self.remarkArray exchangeObjectAtIndex:payCount withObjectAtIndex:i];
                 
                 payCount++;
             }
@@ -339,27 +346,27 @@
             case 0:
                 for (int i = 0; i < payCount; i ++) {
                     for (int j = 0; j < payCount - i; j ++) {
-                        x = [cashArray[j] floatValue];
-                        y = [cashArray[j + 1] floatValue];
+                        x = [self.cashArray[j] floatValue];
+                        y = [self.cashArray[j + 1] floatValue];
                         if (x > y) {
-                            [titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
                         }
                     }
                 }
-                for (int i = payCount; i < cashArray.count - payCount - 1; i ++) {
-                    for (int j = payCount; j < cashArray.count - payCount - 1 - i; j ++) {
-                        x = [cashArray[j] floatValue];
-                        y = [cashArray[j + 1] floatValue];
+                for (int i = payCount; i < self.cashArray.count - payCount - 1; i ++) {
+                    for (int j = payCount; j < self.cashArray.count - payCount - 1 - i; j ++) {
+                        x = [self.cashArray[j] floatValue];
+                        y = [self.cashArray[j + 1] floatValue];
                         if (x > y) {
-                            [titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
                         }
                     }
                 }
@@ -370,27 +377,27 @@
                 
                 for (int i = 0; i < payCount; i ++) {
                     for (int j = 0; j < payCount - i; j ++) {
-                        x = [cashArray[j] floatValue];
-                        y = [cashArray[j + 1] floatValue];
+                        x = [self.cashArray[j] floatValue];
+                        y = [self.cashArray[j + 1] floatValue];
                         if (x < y) {
-                            [titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
                         }
                     }
                 }
-                for (int i = payCount; i < cashArray.count - payCount - 1; i ++) {
-                    for (int j = payCount; j < cashArray.count - payCount - 1 - i; j ++) {
-                        x = [cashArray[j] floatValue];
-                        y = [cashArray[j + 1] floatValue];
+                for (int i = payCount; i < self.cashArray.count - payCount - 1; i ++) {
+                    for (int j = payCount; j < self.cashArray.count - payCount - 1 - i; j ++) {
+                        x = [self.cashArray[j] floatValue];
+                        y = [self.cashArray[j + 1] floatValue];
                         if (x < y) {
-                            [titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
-                            [remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.titleArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.dateArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.chooseArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.cashArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
+                            [self.remarkArray exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
                         }
                     }
                 }
@@ -403,15 +410,5 @@
     }
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

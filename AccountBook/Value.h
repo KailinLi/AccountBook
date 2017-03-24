@@ -16,13 +16,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Value : NSObject
-{
-    NSString *tmpTitle;
-    NSString *tmpDate;
-    NSString *tmpChoose;
-    NSString *tmpCash;
-    NSString *tmpRemark;
-}
+
 
 @property(nonatomic,strong) NSString *tmpTitle;
 @property(nonatomic,strong) NSString *tmpDate;

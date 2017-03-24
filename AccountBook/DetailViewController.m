@@ -9,7 +9,9 @@
 #import "DetailViewController.h"
 #import "Value.h"
 
-@interface DetailViewController () <UITextFieldDelegate, UITextViewDelegate>
+
+
+@interface DetailViewController () <UITextFieldDelegate, UITextViewDelegate, PassValueDelegate>
 
 @end
 
@@ -52,18 +54,7 @@
     [self.view addSubview:noticeTitle];
     inputTitle.textAlignment = NSTextAlignmentCenter;
     noticeTitle.text = @"input the title";
-    
-    //    noticeDate = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, size.width, 30)];
-    //    [self.view addSubview:noticeDate];
-    //    noticeDate.text = @"input the Date";
-    //
-    //    noticeCash = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, size.width, 30)];
-    //    [self.view addSubview:noticeCash];
-    //    noticeCash.text = @"input the Cash";
-    //
-    //    noticeRemark = [[UILabel alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 + size.width * 0.28, size.width, 30)];
-    //    [self.view addSubview:noticeRemark];
-    //    noticeRemark.text = @"Remark";
+
     
     inputTitle = [[UITextView alloc]initWithFrame:CGRectMake(0, 100, size.width, 50)];
     inputTitle.text = tmpTitle;
@@ -173,8 +164,11 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"修改成功" message:@"\n学会理财，适度消费哦^o^" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction: [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:true completion:nil];
-    
+    [self presentViewController:alert animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    }];
 }
 
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -238,14 +232,6 @@
     }
 
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

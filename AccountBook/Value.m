@@ -10,6 +10,5 @@
 
 @implementation Value
 
-@synthesize tmpTitle, tmpDate, tmpChoose, tmpCash, tmpRemark;
 
 @end

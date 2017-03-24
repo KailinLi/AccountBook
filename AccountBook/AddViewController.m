@@ -19,8 +19,8 @@
     UILabel *noticeDate;
     UILabel *noticeCash;
     UILabel *noticeRemark;
-    UITextView *inputTitle;
-    UITextView *inputCash;
+    UITextField *inputTitle;
+    UITextField *inputCash;
     UITextField *inputRemark;
     UIDatePicker *datePicker;
     UISegmentedControl *segments;
@@ -33,7 +33,6 @@
     
 }
 
-@synthesize titleArray, dateArray, chooseArray, cashArray, remarkArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,25 +40,10 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     CGSize size = self.view.bounds.size;
-    noticeTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, size.width, 30)];
-    [self.view addSubview:noticeTitle];
-    inputTitle.textAlignment = NSTextAlignmentCenter;
-    noticeTitle.text = @"input the title";
+
     
-//    noticeDate = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, size.width, 30)];
-//    [self.view addSubview:noticeDate];
-//    noticeDate.text = @"input the Date";
-//    
-//    noticeCash = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, size.width, 30)];
-//    [self.view addSubview:noticeCash];
-//    noticeCash.text = @"input the Cash";
-//    
-//    noticeRemark = [[UILabel alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 + size.width * 0.28, size.width, 30)];
-//    [self.view addSubview:noticeRemark];
-//    noticeRemark.text = @"Remark";
-    
-    inputTitle = [[UITextView alloc]initWithFrame:CGRectMake(0, 100, size.width, 50)];
-    inputTitle.text = @"请输入事件";
+    inputTitle = [[UITextField alloc]initWithFrame:CGRectMake(0, 100, size.width, 50)];
+    inputTitle.placeholder = @"请输入事件";
     inputTitle.font = [UIFont fontWithName:@"Arial" size:30];
     inputTitle.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputTitle];
@@ -81,14 +65,14 @@
     }
     [segments addTarget:self action:@selector(change:) forControlEvents:UIControlEventValueChanged];
     
-    inputCash = [[UITextView alloc] initWithFrame:CGRectMake(150, 328, size.width - 150, 50)];
-    inputCash.text = @"请输入金额";
+    inputCash = [[UITextField alloc] initWithFrame:CGRectMake(150, 328, size.width - 150, 50)];
+    inputCash.placeholder = @"请输入金额";
     inputCash.font = [UIFont fontWithName:@"Arial" size:20];
     inputCash.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputCash];
     
     inputRemark = [[UITextField alloc] initWithFrame:CGRectMake(0, size.height - (size.height - 44) * 0.62 + size.width * 0.28 + 30, size.width, 30)];
-    inputRemark.text = @"请输入备注";
+    inputRemark.placeholder = @"请输入备注";
     inputRemark.font = [UIFont fontWithName:@"Arial" size:20];
     inputRemark.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:inputRemark];
@@ -189,8 +173,11 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存成功" message:@"\n学会理财，适度消费哦^o^" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction: [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:true completion:nil];
-
+    [self presentViewController:alert animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    }];
 }
 
 
